@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  app:
+    image: "alexgershberg/oxi_app:latest"
+    ports:
+      - "5000:5000"
+    deploy:
+      replicas: 3
+    networks:
+      - backend
+  logger:
+    image: "alexgershberg/oxi_logger:latest"
+    deploy:
+      replicas: 1
+    networks:
+      - backend
+  redis:
+    image: "redis:alpine"
+    deploy:
+      replicas: 1
+    networks:
+      - backend
+
+networks:
+  backend:
