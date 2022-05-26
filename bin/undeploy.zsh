@@ -1,3 +1,4 @@
 docker stack rm Oxi
 sleep 8
-zsh remove_images.zsh
+zsh images_remove.zsh
+zsh dependencies_remove.zsh

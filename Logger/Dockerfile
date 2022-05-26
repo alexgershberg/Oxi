@@ -1,6 +1,7 @@
 FROM python:3.8-alpine
 WORKDIR /code
 ADD logger.py .
+COPY oxi_json_typing oxi_json_typing
 ENV FLASK_APP=logger.py
 ENV FLASK_ENV=development
 COPY requirements.txt requirements.txt

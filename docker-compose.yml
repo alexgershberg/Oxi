@@ -5,7 +5,7 @@ services:
     ports:
       - "5000:5000"
     deploy:
-      replicas: 3
+      replicas: 1
     networks:
       - backend
   logger:
