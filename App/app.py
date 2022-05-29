@@ -38,17 +38,18 @@ def yell_endpoint():
 def hear_endpoint() -> T_Response_Json:
     enquiry_json: T_Enquiry_Json = request.get_json()
     enquiry_index: str = enquiry_json["index"]
+    enquiry_max_load: int = int(enquiry_json["max_load"])
     db_index: Optional[bytes] = None
     try:
         db_index: Optional[bytes] = database.hget("index", "count")
     except Exception as e:
         print("Error. Database not found. Is Redis running?")
 
-    response_json: T_Response_Json = assemble_response_json(enquiry_index, db_index)
+    response_json: T_Response_Json = assemble_response_json(enquiry_index, db_index, enquiry_max_load)
     return response_json
 
 
-def assemble_response_json(enquiry_index: str, db_index: Optional[bytes]) -> T_Response_Json:
+def assemble_response_json(enquiry_index: str, db_index: Optional[bytes], enquiry_max_load: int) -> T_Response_Json:
     if db_index is None:
         return {"db_index": "0", "message_count": "0", "container": f"{os.uname().nodename}", "records": {}}
 
@@ -58,11 +59,15 @@ def assemble_response_json(enquiry_index: str, db_index: Optional[bytes]) -> T_R
     if enquiry_index == db_index:
         return {"db_index": f"{db_index}", "message_count": "0",  "container": f"{os.uname().nodename}", "records": {}}
 
+    records_count = db_index - enquiry_index
+    if records_count >= enquiry_max_load:
+        enquiry_index = db_index - enquiry_max_load
+
     records: Dict[str, str] = {}
+
     for i in range(enquiry_index + 1, db_index + 1):
         # Database return type needs to be checked. Not sure if its always Dict[str, str] (or, if it can be None)
-        data: Dict[str, str] = database.hgetall(i)
-        print(f"[DEBUG] data: {data}", file=sys.stderr)
+        data: Optional[Dict[str, str]] = database.hgetall(i)
         if data:
             # Not sure why i'm getting this warning. Have to check type-correctness.
             records[f"{i}"] = f"{data}"

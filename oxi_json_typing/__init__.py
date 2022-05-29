@@ -1,8 +1,9 @@
-from typing import TypedDict, Dict
+from typing import TypedDict, Dict, Union
 
 
 class T_Enquiry_Json(TypedDict):
     index: str
+    max_load: str
 
 
 # Response from the server to the view.
@@ -14,14 +15,14 @@ class T_Response_Json(TypedDict):
 
 
 class T_Message_Json(TypedDict):
-    username: str  # Client username
-    message: str  # Client message
+    username: Union[str, bytes]  # Client username
+    message: Union[str, bytes]  # Client message
 
 
 class T_Yell_Json(T_Message_Json):
-    index: str  # Local user message index
-    time: str  # Time of the request
-    app_node: str  # Container ID that processed this request
+    index: Union[str, bytes]
+    time: Union[str, bytes]  # Time of the request
+    app_node: Union[str, bytes]  # Container ID that processed this request
     # (Though, this gets sent to the logger, hence it's called app_node)
 
 

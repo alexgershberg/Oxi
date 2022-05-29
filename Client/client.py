@@ -1,9 +1,10 @@
 import requests
 from oxi_json_typing import T_Message_Json
+from typing import Optional
 
 
 class User:
-    username = None
+    username: Optional[str] = None
 
 
 yell = "http://0.0.0.0:5000/yell"
@@ -26,7 +27,7 @@ if __name__ == "__main__":
         print("Error while sending a request. Is the server down?")
 
     while True:
-        message = str(input())
+        message: str = str(input())
 
         if message.lower() == "exit":
             break

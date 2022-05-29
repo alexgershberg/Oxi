@@ -4,7 +4,7 @@ import time
 from oxi_json_typing import T_Response_Json, T_Enquiry_Json, T_Yell_Json
 
 hear: str = "http://0.0.0.0:5000/hear"
-load_last: int = 100  # Load last N messages (To avoid loading entire message history)
+max_load: int = 100  # Load last N messages (To avoid loading entire message history)
 
 
 class Data:
@@ -35,10 +35,11 @@ def broadcast(response_json: T_Response_Json, local_index: int, db_index: int) -
 if __name__ == "__main__":
     while True:
         enquiry_json: T_Enquiry_Json = {
-            "index": f"{Data._local_index}"
+            "index": f"{Data._local_index}",
+            "max_load": f"{max_load}"  # Load at most N amount of messages
         }
 
-        time.sleep(5)
+        time.sleep(7)
 
         raw_response_json = None
         try:
@@ -48,6 +49,7 @@ if __name__ == "__main__":
 
         if raw_response_json is not None:
             response_json: T_Response_Json = ast.literal_eval(raw_response_json.text)
-            str_db_index: str = response_json["db_index"]
-            db_index: int = int(str_db_index)
-            broadcast(response_json, Data._local_index, db_index)
+            message_count: int = int(response_json["message_count"])
+            db_index: int = int(response_json["db_index"])
+            start_index: int = db_index - message_count
+            broadcast(response_json, start_index, db_index)
