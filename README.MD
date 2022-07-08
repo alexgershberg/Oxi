@@ -12,11 +12,11 @@ a stack.
 Modify docker-compose.yml for desired scale.
 
 ## Commands:
-    zsh deploy.zsh    # - build local images, run in stack from docker-compose.yml
-    zsh undeploy.zsh    # - remove stack, remove local images
-    zsh build_images.zsh    # - build local images
+    zsh deploy.zsh           # - build local images, run in stack from docker-compose.yml
+    zsh undeploy.zsh         # - remove stack, remove local images
+    zsh build_images.zsh     # - build local images
     zsh remove_images.zsh    # - remove local images
-    zsh app_attach.zsh    # - attach terminal to app output
+    zsh app_attach.zsh       # - attach terminal to app output
     zsh logger_attach.zsh    # - attach terminal to logger output
 
 ## Connecting with client:
