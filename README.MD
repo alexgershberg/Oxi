@@ -20,5 +20,10 @@ Modify docker-compose.yml for desired scale.
     zsh logger_attach.zsh    # - attach terminal to logger output
 
 ## Connecting with client:
+Oxi has two client scripts:
+    client.py serves as stdout 
+    view.py serves as stdin
+
 1. Navigate to Oxi/Client
 2. Run python3 client.py
+3. Run python3 view.py (in a separate window)
