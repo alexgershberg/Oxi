@@ -7,11 +7,12 @@ from typing import Dict, Optional
 from flask import Flask, request
 import requests
 
-
-log = "http://0.0.0.0:2515/log"
+# Endpoints
+log = "http://logger:2515/log"
+reds = "redis"
 
 app = Flask(__name__)
-database = redis.Redis(host="0.0.0.0", port=6379)
+database = redis.Redis(host="redis", port=6379)
 
 
 @app.route("/yell", methods=["POST"])
@@ -33,7 +34,7 @@ def yell_endpoint():
     try:
         requests.post(log, json=yell_json)
     except Exception:
-        pass
+        print("Error. No access to logger.", file=sys.stderr)
 
     return ""
 

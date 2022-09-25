@@ -2,6 +2,7 @@
 ## Build instructions:
 
 1. Navigate to Oxi/bin
+3. Run zsh dependencies_add.zsh
 2. Run zsh deploy.zsh 
 
 This will build required images locally 
