@@ -3,7 +3,7 @@ import requests
 import time
 from oxi_json_typing import T_Response_Json, T_Enquiry_Json, T_Yell_Json
 
-hear: str = "http://0.0.0.0:5000/hear"
+hear: str = "http://127.0.0.1:5000/hear"
 max_load: int = 100  # Load last N messages (To avoid loading entire message history)
 
 
@@ -47,6 +47,9 @@ if __name__ == "__main__":
         time.sleep(1)
 
         raw_response_json = None
+
+
+
         try:
             raw_response_json = requests.get(hear, json=enquiry_json)
         except Exception as e:

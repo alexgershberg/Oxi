@@ -8,8 +8,10 @@ from flask import Flask, request
 import requests
 
 
+log = "http://0.0.0.0:2515/log"
+
 app = Flask(__name__)
-database = redis.Redis(host="redis", port=6379)
+database = redis.Redis(host="0.0.0.0", port=6379)
 
 
 @app.route("/yell", methods=["POST"])
@@ -20,14 +22,16 @@ def yell_endpoint():
         current_index = database.hincrby("index", "count")
         yell_json["index"] = f"{current_index}"
         yell_json["time"] = f"{datetime.datetime.now().strftime('%x %X')}"
+        
         database.hset(current_index, mapping=yell_json)
     except Exception:
+        print(f"Got exception: {Exception}")
         print("Error. No access to database.", file=sys.stderr)
 
     yell_json["app_node"] = f"{os.uname().nodename}"
 
     try:
-        requests.post("http://logger:2515/log", json=yell_json)
+        requests.post(log, json=yell_json)
     except Exception:
         pass
 

@@ -3,8 +3,14 @@ __pycache__
 .idea
 Redis/
 **/.DS_Store
+
 App/oxi_json_typing/
+App/app-venv/
+
 Logger/oxi_json_typing/
+Logger/logger-venv/
+
+Client/client-venv
 Client/oxi_json_typing/
 
 

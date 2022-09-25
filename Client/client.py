@@ -7,9 +7,9 @@ class User:
     username: Optional[str] = None
 
 
-yell = "http://0.0.0.0:5000/yell"
-hear = "http://0.0.0.0:5000/hear"
-auth = "http://0.0.0.0:5000/auth"
+yell = "http://127.0.0.1:5000/yell"
+hear = "http://127.0.0.1:5000/hear"
+# auth = "http://0.0.0.0:5000/auth"
 
 
 if __name__ == "__main__":

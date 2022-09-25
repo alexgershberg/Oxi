@@ -15,7 +15,7 @@ services:
     networks:
       - backend
   redis:
-    image: "redis:alpine"
+    image: "redis:7.0.5-alpine3.16"
     deploy:
       replicas: 1
     networks:
